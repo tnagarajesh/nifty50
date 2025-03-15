@@ -13,14 +13,6 @@ except FileNotFoundError:
     st.error("Model file not found. Please make sure 'your_model.h5' exists in the same directory.")
     st.stop()
 
-# Load the MinMaxScaler (assuming you saved it) or initialize and fit on training data
-try:
-    import joblib
-    scaler = joblib.load('scaler.joblib')  # Replace 'scaler.joblib' with your scaler's filename
-except FileNotFoundError:
-    st.error("Scaler file not found. Please make sure 'scaler.joblib' exists in the same directory.")
-    st.stop()
-
 # Define feature names
 feature_names = ['Nifty Close Price', 'S&P 100 Close Price', 'Crude oil price',
                  'Nifty volatility index', 'USD to INR exchange rate', 'Gold Price', 'MACD', 'RSI']
@@ -34,13 +26,15 @@ for feature in feature_names:
     user_input = st.number_input(f'Enter {feature}:')
     inputs.append(user_input)
 
+scaler = MinMaxScaler()
+
 # Prediction button
 if st.button('Predict'):
     # Prepare input data
     input_data = np.array(inputs).reshape(1, -1)
 
     # Scale the input data
-    scaled_input = scaler.transform(input_data)
+    scaled_input = scaler.fit_transform(input_data)
 
     # Make prediction
     prediction = model.predict(scaled_input)
