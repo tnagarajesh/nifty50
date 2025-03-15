@@ -4,13 +4,11 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 import joblib
-from tensorflow.keras.models import Model
-from tensorflow.keras.models import load_model
+
 
 # Load the trained Keras model
 try:
-    #model = tf.keras.models.load_model("C:\\Users\\nagar\\QuantCode\\Research Paper\\nifty\\final_model.h5") # Replace 'your_model.h5' with your model's filename
-    model = load_model("final_model.h5")
+    model = tf.keras.models.load_model("final_model.h5") # Replace 'your_model.h5' with your model's filename
 except FileNotFoundError:
     st.error("Model file not found. Please make sure 'your_model.h5' exists in the same directory.")
     st.stop()
